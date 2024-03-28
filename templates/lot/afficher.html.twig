@@ -1,0 +1,90 @@
+{# templates/lot/afficher.html.twig #}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% if dateEnchere is not null %}Comptable | Liste des lots vendus le {{ dateEnchere | format_datetime(pattern='dd MMMM Y', locale='fr') }}{% else %}Directeur des ventes | Liste des lots non vendus{% endif %}</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+Wy5gyBo/eYVRU/qE80+3Zl6aWNa1F00Hz7" crossorigin="anonymous">
+
+    <style>
+        body {
+            background-color: #ecf0f5;
+            padding: 20px;
+            font-family: 'Montserrat', sans-serif;
+        }
+        h1 {
+            color: #000000;
+            text-align: center;
+            margin-bottom: 30px;
+            font-family: 'Roca One', sans-serif;
+        }
+        .lot {
+            background-color: #7FAAC8;
+            color: #ffffff;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 10px; /* Coins plus arrondis */
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.4); /* Ombre plus prononcée */
+            position: relative; /* Ajout de position relative */
+            overflow: hidden; /* Masquer les débordements */
+        }
+        p {
+            margin-bottom: 15px;
+        }
+        .shape {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: #7FAAC8;
+            z-index: -1;
+        }
+        .shape-top {
+            top: -20px; /* Positionnement de la forme en haut */
+            left: 0; /* Alignement à gauche */
+            width: 100%;
+            height: 50px; /* Hauteur de la forme */
+            border-bottom-right-radius: 50px; /* Coins arrondis */
+            border-bottom-left-radius: 50px; /* Coins arrondis */
+        }
+        .shape-bottom {
+            bottom: -20px; /* Positionnement de la forme en bas */
+            left: 0; /* Alignement à gauche */
+            width: 100%;
+            height: 50px; /* Hauteur de la forme */
+            border-top-right-radius: 50px; /* Coins arrondis */
+            border-top-left-radius: 50px; /* Coins arrondis */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        {% if dateEnchere is not null %}
+            <h1>Comptable | Liste des lots vendus le {{ dateEnchere | format_datetime(pattern='dd MMMM Y', locale='fr') }}</h1>
+        {% else %}
+            <h1>Directeur des ventes | Liste des lots non vendus</h1>
+        {% endif %}
+    </header>
+
+    <main>
+        {% if lots is not empty %}
+            {% for lot in lots %}
+                <div class="lot">
+                    <div class="shape shape-top"></div> <!-- Forme en haut -->
+                    <p>Lot {{ lot.id }}</p>
+                    {% if dateEnchere is not null %}
+                        <p>Date d'Enchère : {{ dateEnchere | format_datetime(pattern='dd MMMM Y', locale='fr') }}</p>
+                    {% else %}
+                        <p>Ce lot n'a pas de date d'enchère.</p>
+                    {% endif %}
+                    <div class="shape shape-bottom"></div> <!-- Forme en bas -->
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>Aucun lot trouvé.</p>
+        {% endif %}
+    </main>
+</body>
+</html>

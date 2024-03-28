@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <title>Afficher Toutes les Factures</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8sh+Wy5gyBo/eYVRU/qE80+3Zl6aWNa1F00Hz7" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Rokkitt&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #ecf0f5; /* Couleur de fond */
+            padding: 20px;
+            font-family: 'Montserrat', sans-serif; /* Utiliser la police Montserrat pour le corps du texte */
+        }
+        h1 {
+            color: #16645F; /* Couleur du titre */
+            text-align: center;
+            margin-bottom: 20px; /* Ajouter de l'espace en bas du titre */
+            font-family: 'Rokkitt', serif; /* Utiliser la police Rokkitt pour le titre */
+            font-weight: bold;
+        }
+        h2 {
+            color: #16645F; /* Couleur du sous-titre */
+            text-align: center;
+            margin-bottom: 20px; /* Ajouter de l'espace en bas du sous-titre */
+            font-family: 'Rokkitt', serif; /* Utiliser la police Rokkitt pour le sous-titre */
+        }
+        table {
+            background-color: #ffffff; /* Couleur de fond du tableau */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5); /* Ombre légère autour du tableau */
+        }
+        th, td {
+            border: 1px solid #7FAAC8; /* Couleur de la bordure des cellules */
+            padding: 12px;
+            text-align: center;
+        }
+        th {
+            background-color: #008CBA; /* Couleur de fond des cellules d'en-tête */
+            color: #ffffff; /* Couleur du texte dans les cellules d'en-tête */
+            font-family: 'Montserrat', sans-serif;
+        }
+        tbody tr:hover {
+            background-color: #7FAAC8; /* Couleur de fond au survol de la ligne */
+        }
+    </style>
+</head>
+<body>
+    <img src="images/logoCriee.png" alt="Logo poisson" style="width: 200px; display: block; margin: 0 auto; margin-bottom: -50px;">
+
+    <h1 style="color: #16645F; font-family: 'Rokkitt', serif; margin-bottom: 0px; font-weight: bold;">La criée</h1>
+    <h2 style="font-family: 'Montserrat', sans-serif; margin-top: 0;">mon poisson il est frais</h2>
+    <br>
+    <p text-align: left; style="font-family: 'Montserrat', sans-serif; font-weight: bold;" >Informations détaillées des Factures</p>
+
+    {% if factures is not empty %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID Facture</th>
+                    <th>ID Acheteur</th>
+                    <th>Date Facture</th>
+                    <th>Montant Total</th>
+                    <th>Statut Facture</th>
+                    <th>Date Limite Paiement</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for facture in factures %}
+                    <tr>
+                        <td>{{ facture.idFacture }}</td>
+                        <td>{{ facture.idAcheteur }}</td>
+                        <td>{{ facture.dateFacture ? facture.dateFacture|date('Y-m-d') : '' }}</td>
+                        <td>{{ facture.montantTotal }}</td>
+                        <td>{{ facture.statutFacture }}</td>
+                        <td>{{ facture.dateLimitePaiement ? facture.dateLimitePaiement|date('Y-m-d') : '' }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Aucune facture trouvée.</p>
+    {% endif %}
+</body>
+</html>
